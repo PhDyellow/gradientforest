@@ -1,7 +1,7 @@
 `getSplitImprove` <-function(fit, X) {
 #   return a data-frame: var name, rsq, var number, split value, improvement
     trees <- lapply(1:fit$ntree, function(k) try(getTree(fit, k),silent=TRUE)) #Nick Ellis 10/12/2009
-    ok <- sapply(trees, class) != "try-error"
+    ok <- sapply(trees, function(k) class(k)[1]) != "try-error"
      tmp <- do.call("rbind", lapply((1:fit$ntree)[ok], function(k) cbind(tree = k, trees[[k]])))
     tmp <- tmp[tmp[,"status"]==-3 & zapsmall(tmp[,"improve"]) > 0,c("split var","split point","improve")]
     colnames(tmp) <- c("var_n","split","improve")
