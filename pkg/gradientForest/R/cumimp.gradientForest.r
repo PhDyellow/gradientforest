@@ -6,7 +6,7 @@ function (x, predictor, type=c("Overall","Species")[1], standardize=TRUE, standa
     stop(paste("'x' must be a gradientForest object"))
   if (length(predictor) != 1)
     stop(paste("'predictor' must be a single string"))
-  if (!is.element(predictor,levels(x$res$var)))
+  if (!is.element(predictor,unique(x$res$var)))
     stop(paste("Predictor",predictor,"does not belong to gradientForest object"))
   if (is.na(option <- pmatch(type,c("Overall","Species"))))
     stop(paste('Unmatched type "',type,'". Expecting one of "Overall" or "Species"',sep=''))

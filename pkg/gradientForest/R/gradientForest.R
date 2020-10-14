@@ -46,7 +46,7 @@ function(data,predictor.vars,response.vars,ntree=10,mtry=NULL, transform=NULL,ma
       else if (fit$type == "classification") {
       if(!is.na(fit$err.rate[fit$ntree,"OOB"])){
         # p is proportion of Y on first level (e.g. absent)
-        p <- sum(Y[[spec]] == levels(Y[[spec]])[1])/ length(Y[[spec]])
+        p <- sum(Y[[spec]] == range(Y[[spec]])[1])/ length(Y[[spec]])
         err0 <-  2*p*(1-p)
         if(fit$err.rate[fit$ntree,"OOB"] < 2*p*(1-p)) {
           species.pos.rsq<-species.pos.rsq+1
@@ -55,7 +55,7 @@ function(data,predictor.vars,response.vars,ntree=10,mtry=NULL, transform=NULL,ma
           } else {
             result[[spec]] <- getSplitImproveClass(fit,X,err0)   #added by Nick 24/05/2009
           }
-          nclass <- length(levels(Y[[spec]]))
+          nclass <- length(unique(Y[[spec]]))
           imp <- rbind(imp,fit$importance[,-(1:nclass)])
         }
         }

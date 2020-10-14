@@ -9,8 +9,8 @@ function(obj,imp.vars=NULL, imp.vars.names=imp.vars,
  	  if(is.null(imp.vars)) imp.vars<-imp.var.names <- names(importance(obj))[1:2]
    
     par(mfrow=mfrow)
-    cols <- rainbow(length(levels(obj$res.u$spec))) #modified SJS 08/10/2009
-    names(cols) <- levels(obj$res.u$spec)  #modified SJS 08/10/2009
+    cols <- rainbow(length(unique(obj$res.u$spec))) #modified SJS 08/10/2009
+    names(cols) <- unique(obj$res.u$spec)  #modified SJS 08/10/2009
  	  
     xaxt <- if(show.overall) "n" else "s"
     if (show.species) {
