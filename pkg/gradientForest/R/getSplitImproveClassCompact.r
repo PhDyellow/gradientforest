@@ -14,7 +14,7 @@
 
 #   assign the split to the appropriate bin and aggregate importance in each bin
     Xnames <- colnames(bins)
-    tmp <- data.frame(var=Xnames[tmp[,"var_n"]], tmp, bin=rep(0,nrow(tmp)))
+    tmp <- data.frame(var=factor(Xnames[tmp[,"var_n"]], levels = Xnames), tmp, bin=rep(0,nrow(tmp)))
     for(p in Xnames) {
         if(any(sub <- with(tmp,var==p)))
           tmp$bin[sub] <- as.numeric(cut(tmp$split[sub], bins[,p], include=TRUE, ordered=TRUE))

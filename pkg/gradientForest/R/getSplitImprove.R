@@ -6,7 +6,7 @@
     tmp <- tmp[tmp[,"status"]==-3 & zapsmall(tmp[,"improve"]) > 0,c("split var","split point","improve")]
     colnames(tmp) <- c("var_n","split","improve")
     rownames(tmp)<-NULL     #S.J. Smith 11/05/2009
-    res <- cbind(data.frame(var=names(X)[tmp[,"var_n"]],rsq=rep(fit$rsq[fit$ntree],nrow(tmp))),tmp)
+    res <- cbind(data.frame(var=factor(names(X)[tmp[,"var_n"]], levels = names(X)),rsq=rep(fit$rsq[fit$ntree],nrow(tmp))),tmp)
     ok <- zapsmall(res[,"improve"]) > 0
     res[ok,] 
   }
