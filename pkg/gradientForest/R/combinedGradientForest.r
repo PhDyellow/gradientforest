@@ -103,6 +103,7 @@ direction = "wide"
     ####gf.names gives mapping between GF object and predictor set
     ####X is making a giant data.frame of all samples, labelled by GF
     X <- lapply(gearnames, function(a) {cbind(gf.name=a,create.df(fList[[a]]$X))})
+    names(X) <- gearnames
     ## X <- do.call("rbind",lapply(gearnames, function(a) {cbind(gf.name=a,create.df(fList[[a]]$X))})) #
 #    X <- do.call("rbind",lapply(gearnames, function(a) {cbind(gf.name=a,fList[[a]]$X)}))
 #
