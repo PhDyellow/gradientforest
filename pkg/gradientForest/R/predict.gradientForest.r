@@ -10,7 +10,7 @@ function (object, newdata, extrap=TRUE, ...)
     if(!inherits(newdata,"data.frame"))
         stop("newdata must be a data.frame")
     newnames <- names(newdata)
-    if(!all(ok <- newnames %in% names(object$X))) {
+    if(!all(ok <- newnames %in% as.character(unique(object$res$var)))) {
         badnames <- paste(newnames[!ok], collapse=", ")
         stop(paste("the following predictors are not in the gradientForest:\n\t",badnames,sep=""))
     }
