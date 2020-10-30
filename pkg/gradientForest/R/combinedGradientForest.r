@@ -102,6 +102,7 @@ direction = "wide"
     ###Allow different input predictors
     ####gf.names gives mapping between GF object and predictor set
     ####X is making a giant data.frame of all samples, labelled by GF
+    X <- lapply(gearnames, function(a) {cbind(gf.name=a,create.df(fList[[a]]$X))})
     ## X <- do.call("rbind",lapply(gearnames, function(a) {cbind(gf.name=a,create.df(fList[[a]]$X))})) #
 #    X <- do.call("rbind",lapply(gearnames, function(a) {cbind(gf.name=a,fList[[a]]$X)}))
 #
@@ -156,7 +157,7 @@ direction = "wide"
     ## imp.rsq.total <- sapply(imp.rsq.list,rowSums,na.rm=TRUE)
     for (predictor in allpreds) {
       g <- gf.names[[predictor]]
-      weight <- rbind(
+      weight <- as.matrix(rbind(
         uniform = rep(1,length(g)), 
         species = nspec[g], 
         rsq.total = imp.rsq.total[predictor,g],
@@ -165,7 +166,7 @@ direction = "wide"
         site.species = nsite[g]*nspec[g], 
         site.rsq.total = nsite[g]*imp.rsq.total[predictor,g],
         site.rsq.mean = nsite[g]*imp.rsq.total[predictor,g]/nspec[g]
-      )
+      ))
       densList <- lapply(dens[c("Combined",g)],"[[",predictor) # list of densities, combined version first
       grid <- bins[,predictor]
       densMat <- sapply(densList, interpolate, grid=grid)
@@ -182,7 +183,7 @@ direction = "wide"
 
     out <- list(
       call = match.call(),
-      X = X,
+      X = X, #TODO: X is now a list of site by pred matrices, one per GF object. Future functions expecting X to be a global site by pred matrix will fail. I expect predict to fail if no new env is provided
       dens = dens,
       imp.rsq = imp.rsq,
       rsq = rsq,
